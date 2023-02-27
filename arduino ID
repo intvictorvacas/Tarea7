@@ -1,0 +1,81 @@
+#include  <ESP8266WiFi.h>
+#include <WiFiClient.h>
+const char* ssid = "Di que eres pobre";
+const char* pass = "Soy pobre";
+const char* host = "";
+int button = 1;
+int led = 2;
+int button3 = 3;
+char mensaje;
+
+void setup() {
+pinMode(led, OUTPUT);
+pinMode(button, INPUT);
+pinMode(button3, INPUT);
+
+
+Serial.begin(9600);
+  Serial.begin(9600);
+  Serial.println("");
+  Serial.print("Conectado a: ");
+  Serial.println(ssid);
+  WiFi.mode(WIFI_STA);
+  delay(100);
+  WiFi.begin(ssid,pass);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(100);
+    Serial.print(".");
+  pinMode(led, OUTPUT);
+  }
+  Serial.println("");
+  Serial.println(WiFi.localIP());
+}
+
+void loop() {
+  Serial.begin(9600);
+  pinMode(led, OUTPUT);
+  pinMode(pull1, INPUT);
+  pinMode(pull2, INPUT);
+
+
+  WiFiClient client;
+  if (!client.connect(host, 9091)) {
+    Serial.println(".");
+    return;
+  }
+   Serial.println("");
+  Serial.println("Enviando mensaje a:");
+  Serial.println(host);
+  delay(100);
+  String line2 = client.readStringUntil('\n');
+  Serial.println("Respuesta " + line2);
+  Serial.println("");
+  Serial.println("Cerrando la conexion");
+  client.flush();
+  client.stop();
+  delay(100);
+bool a = digitalRead(button);
+  bool b = digitalRead(button3);
+
+ 
+    if(a == '1') {
+      digitalWrite(led,HIGH);
+      delay(100);
+      Serial.println("Pueta abierta");
+      }
+      else {
+        digitalWrite(led,LOW);  
+  }
+      
+    if(b == '2'){
+      
+    digitalWrite(led, HIGH);
+    delay(100);
+    digitalWrite(led, LOW);
+    delay(100);
+    digitalWrite(led, HIGH);
+    delay(100);
+    digitalWrite(led, LOW);
+    Serial.println("Puerta Cerrada");
+ }   
+  }
